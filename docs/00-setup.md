@@ -13,16 +13,21 @@ After this starter lab you'll have a virtual machine, and have Git set up.
 
 We're going to install an operating system from scratch.
 
-TODO: Change to Ubuntu.
+TODO: Change to Debian.
 
-### Download Fedora ISO
+### Download Debian Testing ISO
 
-https://fedoraproject.org/workstation/download/
+https://www.debian.org/devel/debian-installer/
 
-Unless you have a machine using Apple Silicon, under
-**For Intel and AMD x86_64 systems** download the Live ISO.
-If you're using Apple Silicon, under **For ARM® aarch64 systems** download the
-Live ISO.
+Unless you have a machine using Apple Silicon, download the **amd64** version of
+the Live ISO.
+
+https://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/amd64/iso-cd/
+
+If you're using Apple Silicon, download the **arm64** version of the Live ISO.
+
+https://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/arm64/iso-cd/
+
 
 ### Install Virtualization Softare
 
