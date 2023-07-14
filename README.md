@@ -2,6 +2,14 @@
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
+## Development
+
+Run the development server:
+
+```
+npm run start
+```
+
 ### Installation
 
 ```
