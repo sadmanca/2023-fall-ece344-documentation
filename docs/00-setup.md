@@ -77,7 +77,7 @@ Install **virt-manager**.
   </TabItem>
 </Tabs>
 
-### Installing Debian Testing
+### Install Debian Testing
 
 Now we're ready to install an operating system.
 If you were doing this on your own computer you'd create a bootable USB flash
@@ -105,7 +105,9 @@ After the machine boots, follow these steps:
    anything with it. However, since we're using a virtual machine, we don't care
    as much since our physical machine has security and control over the virtual
    machine. We're also not going to make this virtual machine accessible from
-   the internet. You can use a simple password like `ece344`. Click *Continue*.
+   the internet. You can use a simple password like `ece344`.
+   You'll need to refer to this later, remember this is your **root password**.
+   Click *Continue*.
 9. Fill out your full name and click *Continue*.
 10. Pick a username, again, you'll see this in the terminal as
    `username@hostname`.
@@ -113,7 +115,7 @@ After the machine boots, follow these steps:
 11. Now, you'll set your user's password. You should always have a good password
     (and use a password manager!). Luckily for us, this is a virtual machine,
     so we can make it simple and fast.
-    Pick something and click *Continue*.
+    Pick something, like your username again, and click *Continue*.
 12. Select the timezone, it should be *Eastern*, and click *Continue*.
 13. Wait a bit more.
 14. For partition disks, we'll keep it simple.
@@ -148,8 +150,9 @@ After the machine boots, follow these steps:
 26. Select *SSH server* and *standard system utilities* if they're not already
     checked by default.
     For a graphical environment (if you'd like to develop in the VM, and not
-    remotely) also select *Debian desktop environment* and *GNOME*. As you can
-    see there's lots of options to try after the course if you want.
+    remotely, see the beginning of Part 2 for some insight into the decision)
+    also select *Debian desktop environment* and *GNOME*.
+    As you can see there's lots of options to try after the course if you want.
     For now, click *Continue*.
 27. Wait again.
 28. We're finally done installing the operating system! Click *Continue*.
@@ -159,6 +162,8 @@ You'll likely see the same screen as in step 1.
 We need to shut down the VM and remove the ISO we used to install the operating
 system.
 
+### Remove Debian Testing ISO
+
 <Tabs groupId="operating-systems">
   <TabItem value="win" label="Windows">
 
@@ -167,7 +172,8 @@ Shut down VM.
   </TabItem>
   <TabItem value="mac" label="macOS">
 
-Click on power button beside the "red yellow green" window controls.
+Click on power button beside the "red yellow green" window controls in the top
+left corner.
 Ignore the warning since we're not in our OS yet and click *OK*.
 In the main UTM window (where you can see the virtual machines on the left
 sidebar) select your virtual machine. Click *CD/DVD* at the bottom in the right
@@ -182,9 +188,165 @@ Shut down VM.
   </TabItem>
 </Tabs>
 
-## Part 2: Setting Up Your Development Environment
+You may now delete the `debian-testing-?????-netinst.iso` file you downloaded.
 
-### Setting up GitLab
+### Install Software
+
+Start your virtual machine and login using the user password you set earlier.
+After logging in press **Activities** in the top left and type "Terminal" then
+press enter.
+This will open a terminal and give you access to a shell to run programs.
+Right now our user can't do anything special, but we're going to change that.
+Type the following and press enter:
+
+```
+su -
+```
+
+Type your **root password** and press enter.
+You should now be logged in as the root user, which has access to do anything
+to the operating system.
+Generally you should never do anything as this user and instead ask for
+permission.
+We're going to allow our user we created during setup to do things as the root
+user using the `sudo` command.
+Right now, if you try to use `sudo` as your user you'll get an error like:
+`<USERNAME> is not in the sudoers file.` where `<USERNAME>` is the username
+you picked.
+Let's make sure our user can use `sudo`; type the following command as the root
+user:
+
+```
+usermod -aG sudo <USERNAME>
+```
+
+Instead of typing `<USERNAME>`, type the username you picked.
+Congratulations, that command just added your user to the group of trusted
+users that can use the `sudo` command.
+While we're the root user, let's update the system.
+Type the following command:
+
+```
+apt update
+```
+
+This will check all current software installed for updates.
+Afterwards, it should say you have some updates available.
+Type the following command to install the updates:
+
+```
+apt upgrade
+```
+
+This will tell you what software packages have updates and ask you if you'd like
+to upgrade them.
+Press `Y` to confirm and press enter.
+Now we're running the latest software.
+On Linux it's not necessary to reboot after updates, unless there's an update
+to the kernel.
+However, we may have updated the kernel, and we need to refresh our user
+permissions, so we'll just reboot.
+Type the following command:
+
+```
+reboot
+```
+
+After rebooting, login again and open another terminal.
+We can now type `sudo` in the terminal and anything after that will run as
+the root user (don't type `sudo` yet).
+Try typing:
+
+```
+apt update
+```
+
+You'll get errors, the first one being that you don't have permission.
+Try typing:
+
+```
+sudo apt update
+```
+
+Now it should work.
+Common security practice is to disable the root user account for any outside
+services (since if someone has access to the root account, they can do
+anything).
+Now, we're going to install the software we need for the course.
+Type the following:
+
+```
+sudo apt install build-essential clang clangd git meson python3
+```
+
+Now we've installed the software that we'll be using in every lab.
+We've finished the setup for our virtual machine.
+
+## Part 2: Your Development Environment
+
+You have two choices: remote development or virtual machine development.
+I would highly recommend remote development as your workplaces will likely
+require you to use it.
+Remote development is required if you're using specialized or expensive hardware
+(which is the case for AI).
+It's slightly more involved, but you'll learn more and have more experience.
+The other option is to develop inside the virtual machine.
+The main drawback with using the virtual machine for development is that the
+graphic acceleration is much slower, and trying to copy and paste between your
+operating system and the virtual machine is a pain to set up.
+For the following instructions, just like for your operating system, there are
+tabs you can change depending on your choice.
+
+### Install VSCode
+
+<Tabs groupId="development-environment">
+  <TabItem value="remote" label="Remote Development">
+
+It's very likely you already have **VSCode** from your previous courses.
+If you don't have it installed, please download and install it from
+[here][vscode] using the instructions for your operating system.
+
+
+**Remote**
+First, find the IP of your virtual machine.
+
+
+Install the **Remote - SSH** extension.
+
+  </TabItem>
+  <TabItem value="vm" label="Virtual Machine Development">
+
+**Virtual machine**
+
+  </TabItem>
+</Tabs>
+
+
+https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supported-ssh-client
+
+Press F1 and run the **Remote-SSH: Open SSH Host...*** command
+
+### Generate an SSH Key
+
+```
+ssh-keygen -t ed25519
+```
+
+<Tabs groupId="development-environment">
+  <TabItem value="remote" label="Remote Development">
+
+**Remote**
+First, find the IP of your virtual machine.
+
+  </TabItem>
+  <TabItem value="vm" label="Virtual Machine Development">
+
+**Virtual machine**
+
+  </TabItem>
+</Tabs>
+
+### Setup GitLab
 
 ### Installing Software
 
@@ -202,16 +364,11 @@ int main() {
 }
 ```
 
-
-## Part 3: C Debugging Practice
-
-Now that you're set up on your new operating system it's time to rock.
+## Part 3: Your First Kernel Module
 
 ```
-cd debugging-practice
+sudo apt install linux-headers-$(uname -r)
 ```
-
-## Submission
 
 [debian-installer]: https://www.debian.org/devel/debian-installer/
 [debian-amd64-iso]: https://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/amd64/iso-cd/debian-testing-amd64-netinst.iso
@@ -219,3 +376,4 @@ cd debugging-practice
 [utm]: https://getutm.app/
 [utm-app-store]: https://apps.apple.com/us/app/utm-virtual-machines/id1538878817
 [utm-app]: https://github.com/utmapp/UTM/releases/latest/download/UTM.dmg
+[vscode]: https://code.visualstudio.com/
