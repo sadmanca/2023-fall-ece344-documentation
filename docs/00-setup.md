@@ -564,8 +564,23 @@ green background in the lower left, and then click **Connect Current Window to
 Host...**.
 You'll see a text field at the top center of your VSCode window, enter
 `<USERNAME>@<IP>` the same way you did when you setup remote access.
-This should open a new window, click open on the splash screen or find it in
-the menu.
+
+:::note
+
+If you're on Windows**, use `<USERNAME>@<HOSTNAME>` instead where
+`<HOSTNAME>` is what you picked in step 6 of *Install Debian Testing*.
+This is because Windows will change the IP address of your VM after ever
+reboot.
+VSCode will also ask you what the machine is, pick "Linux".
+You may also find that if you reboot on Windows, your VM won't be able to
+access the internet.
+In this case type `sudo reboot` in your VM's terminal, close VSCode, and
+reconnect.
+
+:::
+
+
+Click open on the splash screen or find it in the menu.
 You'll see another text field at the top center of this new VSCode window.
 It should already say something like `/home/<USERNAME>/`.
 Type `ece344` at the end (do not delete anything), and press enter.
