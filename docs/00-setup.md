@@ -221,8 +221,8 @@ usermod -aG sudo <USERNAME>
 ```
 
 Instead of typing `<USERNAME>`, type the username you picked.
-Congratulations, that command just added your user to the group of trusted
-users that can use the `sudo` command.
+That command just added your user to the group of trusted users that can use the
+`sudo` command, you're all powerful now.
 While we're the root user, let's update the system.
 Type the following command:
 
@@ -401,7 +401,8 @@ Follow these steps to add your public key on GitLab:
 2. Click Edit profile
 3. Click SSH Keys on the left
 4. Add your public SSH key 
-    1. Copy your public key (from running `cat ~/.ssh/id_ed25519.pub`).
+    1. Copy your public key (from running `cat ~/.ssh/id_ed25519.pub` in the
+       terminal).
     2. Paste your public key into the "Key" text box on the site.
     3. (Optional) Give the key a title (it’ll be its name).
     4. Use the default "Usage type" and "Expiration date".
@@ -532,62 +533,93 @@ Keep the terminal open, you'll likely need it for the next section.
 It's very likely you already have **VSCode** from your previous courses.
 If you don't have it installed, please download and install it from
 [here][vscode] using the instructions for your operating system.
+Open VSCode, go to extensions, and download the **Remote - SSH** extension.
 
-
-**Remote**
-First, find the IP of your virtual machine.
-
-
-Install the **Remote - SSH** extension.
-
-<Tabs groupId="operating-systems">
-  <TabItem value="win" label="Windows">
-
-Windows
-
-  </TabItem>
-  <TabItem value="mac" label="macOS">
-
-macOS
-
-  </TabItem>
-  <TabItem value="linux" label="Linux">
-
-Linux
-
-  </TabItem>
-</Tabs>
+After installing the **Remote - SSH** extension, click on the arrows with a
+green background in the lower left, and then click **Connect Current Window to
+Host...**.
+You'll see a text field at the top center of your VSCode window, enter
+`<USERNAME>@<IP>` the same way you did when you setup remote access.
+This should open a new window, click open on the splash screen or find it in
+the menu.
+You'll see another text field at the top center of this new VSCode window.
+It should already say something like `/home/<USERNAME>/`.
+Type `ece344` at the end (do not delete anything), and press enter.
+This will open a new VSCode window (you can close the old one).
+Whenever you need to work on the labs, this is what you'll use.
+You just need to make sure your VM is active, and when you open VSCode again
+you can reopen this environment in your recents (it'll say
+`[SSH <USERNAME>@<IP>]` at the end).
 
   </TabItem>
   <TabItem value="vm" label="Virtual Machine Development">
 
-**Virtual machine**
+Open Firefox (if it's not still open press the Windows or Command key and click
+the leftmost icon on the dock), and go to the **VSCode** website [here][vscode].
+If you're not using this site from the VM the URL is:
+https://code.visualstudio.com/.
+Click the "Download" link in the top right (do not try to download the package
+from the landing site, it may be wrong).
+In the middle column, under the Tux the penguin, download the **x64** version
+of the **.deb** package.
+
+:::note
+
+If your machine is using Apple Silicon (newer 2021+ Macs), download the
+**Arm64** version of the **.deb** package instead.
+
+:::
+
+Switch back to your terminal and type the following command:
+
+```
+cd ~/Downloads/
+sudo apt install ./code_*
+```
+
+After this command completes, you'll have VSCode installed on your virtual
+machine.
+To launch VSCode, press the Windows or Command key, type "Visual", and press
+enter.
+You can also pin VSCode to the bottom dock by dragging it there before pressing
+enter (that way you can just click on the icon on the dock instead of
+searching).
+
+In the VSCode window, go to "File", then "Open Folder...", select "ece344"
+and press the open button in the top right of the window.
+Click "Yes, I trust the authors".
+This is your development environment, to get back to it just open VSCode
+and reopen this folder in recents if it's not already open.
 
   </TabItem>
 </Tabs>
 
-Press F1 and run the **Remote-SSH: Open SSH Host...*** command
+Next go to extensions, and download the **clangd** extension from LLVM.
+This extension adds code completion and easier code exploration.
+Compared to Intellisense, clangd uses a real C++ compiler with the flags used
+when you compile your code and is more accurate and better with larger
+codebases.
 
-<Tabs groupId="development-environment">
-  <TabItem value="remote" label="Remote Development">
+You should open the terminal view in the bottom of VSCode by pressing
+**Ctrl+`**.
+Please close all other terminals, you'll only need the one within VSCode
+from now on.
+Everything you type in the terminal in VSCode will run on the virtual machine.
 
-**Remote**
-First, find the IP of your virtual machine.
+Congratulations, that was quite a journey!
+You used virtualization to install your own Linux operating system from scratch.
+This is a rite of passage for any operating system course, and will serve you
+well in your career.
+Virtualization is very useful for software development, the first thing you'll
+notice is that you're using the same operating system as the rest of your
+friends and everything is consistent between you (no matter your actual
+operating system).
 
-  </TabItem>
-  <TabItem value="vm" label="Virtual Machine Development">
-
-**Virtual machine**
-
-  </TabItem>
-</Tabs>
-
-### Installing Software
+## Part 3: Your First Kernel Module
 
 ```
-sudo dnf install clang
+sudo apt install linux-headers-$(uname -r)
 ```
-
 
 ```c title="hello.c"
 #include <stdio.h>
@@ -595,12 +627,6 @@ sudo dnf install clang
 int main() {
     return 0;
 }
-```
-
-## Part 3: Your First Kernel Module
-
-```
-sudo apt install linux-headers-$(uname -r)
 ```
 
 [debian-installer]: https://www.debian.org/devel/debian-installer/
