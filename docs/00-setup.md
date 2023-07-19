@@ -42,39 +42,27 @@ If your machine is using Apple Silicon (newer 2021+ Macs), download the
 <Tabs groupId="operating-systems">
   <TabItem value="win" label="Windows">
 
-We're going to use [VirtualBox][virtualbox] to host our virtual machine.
-Follow the *Downloads* or click [here][virtualbox-download] then click the link
-for *Windows hosts*.
-This downloads the VirtualBox exe installer, open the exe, allow this app to
-make changes to your device, and it should open the setup window.
-Click *Next >*, accept all the defaults and click *Next >* again, click *Yes*,
-click *Yes* again, then click *Install*.
-You'll have to wait a bit as VirtualBox installs, afterwards leave the box
-checked and click "Finish".
+We're going to use **Hyper-V** to host our virtual machine.
+You can more about it [here][hyper-v], but it's built into Windows.
+Press the Windows key and type "Turn Windows features on or off" and hit enter.
+In the *Turn Windows features on or off* window, select *Hyper-V* and make sure
+both *Hyper-V Management Tools* and *Hyper-V Platform* are checked.
+Press *OK* and restart your computer if needed.
 
-Now the go to the **VirtualBox** window and create your virtual machine by
-following these steps:
-1. Click *New* at the top of the window.
-2. Fill out the *Name:* field with "Debian Testing", or whatever you'd like
-   to name your virtual machine.
-3. Click on the arrow to the right of *ISO Image:*, click *Other ...*, and
-   select the Debian Testing ISO you downloaded. 
+After installing Hyper-V press the Windows key again, type "Hyper-V Quick
+Create", and press enter.
+Allow this app to make changes to your device and wait for it to load.
+Now we'll create your virtual machine by following these steps:
+
+1. Click on the *_Local installation source* near the bottom of the left side.
+2. In the main part of the window click *Change installation source...*
+   and select the Debian Testing ISO you downloaded. 
    The ISO should have a filename similar to `debian-testing-amd64-netinst.iso`.
-   Click open and you should see the *ISO Image:* field filled in.
-4. Click the *Skip Unattended Installation* checkbox to select it.
-   You should see a message at the bottom that says *You have selected to skip
-   unattended guest OS install, the guest OS will need to be installed
-   manually.*.
-5. Leave the rest of the defaults on this window and click *Next*.
-6. Change the number of processors on this screen to at least "4", you can
-   either drag the slider to the right of *Processors:* or input the number.
-   Click the box next to *Enable EFI (special OSes only)* to check that option.
-   Leave the *Base Memory:* field default for now, and click *Next*.
-7. Leave the default *Create a Virtual Hard Disk Now* selected and increase
-   the disk to "40.00 GB".
-   You can leave *Pre-allocate Full Size* unselected and click *Next*.
-8. The next screen is *Summary*, double-check your previous settings and
-   click *Finish*.
+3. Uncheck *This virtual machine will run Windows*.
+4. Click *More options* near the bottom right and fill out *Name* with "Debian
+   Testing", or whatever you'd like to name your virtual machine.
+5. After it's done setting up, click *Connect*.
+   This should open a new window, in this window click *Start*.
 
 
   </TabItem>
@@ -202,7 +190,7 @@ ISO we used to install the operating system.
 <Tabs groupId="operating-systems">
   <TabItem value="win" label="Windows">
 
-VirtualBox automatically removes the installation media, so there's nothing to
+Hyper-V automatically removes the installation media, so there's nothing to
 do for this step.
 
   </TabItem>
@@ -703,8 +691,7 @@ int main() {
 [utm]: https://getutm.app/
 [utm-app-store]: https://apps.apple.com/us/app/utm-virtual-machines/id1538878817
 [utm-app]: https://github.com/utmapp/UTM/releases/latest/download/UTM.dmg
-[virtualbox]: https://www.virtualbox.org/
-[virtualbox-download]: https://www.virtualbox.org/wiki/Downloads
+[hyper-v]: https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/
 [git]: https://git-scm.com/
 [git-for-windows]: https://git-scm.com/download/win
 [1password]: https://1password.com/
