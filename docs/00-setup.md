@@ -677,6 +677,17 @@ bad happens you lose all your work).
 To make sure all the latest changes are on the server use the `git push`
 command.
 
+Now we're going to change our default compiler to Clang from GCC.
+In general Clang gives better error messages than GCC, and it's much easier to
+extend (you may write code for it if you're interested in compilers).
+You'll find additional tools and helpful utilities with Clang, some of which
+we'll use in this course.
+Change the default compiler using the following command:
+
+```
+sudo update-alternatives --set cc /usr/bin/clang
+```
+
 Congratulations, that was quite a journey!
 You used virtualization to install your own Linux operating system from scratch.
 This is a rite of passage for any operating system course, and will serve you
@@ -692,12 +703,31 @@ operating system).
 sudo apt install linux-headers-$(uname -r)
 ```
 
-```c title="hello.c"
-#include <stdio.h>
+```
+sudo insmod hello.ko
+sudo modinfo hello.ko
+sudo dmesg -l info
+sudo rmmod hello
+```
 
-int main() {
+```c title="hello.c"
+#include <linux/module.h>
+#include <linux/printk.h>
+
+int hello_init(void) {
+    pr_info("Hello kernel.\n");
     return 0;
 }
+
+void hello_exit(void) {
+    pr_info("Goodbye kernel.\n");
+}
+
+module_init(hello_init);
+module_exit(hello_exit);
+
+MODULE_AUTHOR("Your name");
+MODULE_LICENSE("GPL");
 ```
 
 [debian-installer]: https://www.debian.org/devel/debian-installer/
