@@ -5,32 +5,48 @@ sidebar_position: 1
 # Lab 1: Debugging and Tools
 
 ## Setting up debugging
-### Install gdb:
 
-***EDIT: gdb should already be installed now***
-
-Now you are good to go for debugging using command line. If you choose this traditional way to debug, checkout [gdb tutorial](https://web.eecs.umich.edu/~sugih/pointers/summary.html) as a starting point. [gdb manual](https://sourceware.org/gdb/current/onlinedocs/gdb.html/) provides every detail you need to know about gdb.
-
-### Setup debugging with gui
-With gdb installed, you can use a modern editor or ide to debug visually. This section will use visual studio code as an example. In [lab 0](./00-setup.md), you should have vscode setup either on vm directly or through remote access.
-
-#### Setup debugging in project
-1. **EDIT: clangd is installed instead**
-2. VSCode, with [Meson extension](https://marketplace.visualstudio.com/items?itemName=mesonbuild.mesonbuild) installed, should recognize the meson project once you open it. If not, open up command palette and run **Meson: Reconfigure**.
+1. Setup build tasks in `.vscode/tasks.json`. Bellow is an example for lab 1.
+```
+{
+    "tasks": [
+        {
+            "label": "Configure: lab 1",
+            "type": "shell",
+            "command": "meson setup builddir",
+            "options": {
+                "cwd": "${workspaceFolder}/01-debugging"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "Compile: lab 1",
+            "type": "shell",
+            "command": "meson compile -C builddir",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/01-debugging"
+            }
+        }
+    ]
+}
+```
+2. The configuration task should run when you re-open the folder. You can also run it manually through Command Palette **Tasks: Run Task**.
 3. Create a launch target configuration in `.vscode/launch.json`. Bellow is an example for lab 1.
 ```
 {
     "configurations": [
         {
-            "name": "example",
+            "name": "Debug: lab 1 example",
             "request": "launch",
             "type": "cppdbg",
             "MIMode": "gdb",
-            "envFile": "${workspaceFolder}/${config:mesonbuild.buildFolder}/meson-vscode.env",
-            "cwd": "${workspaceFolder}/${config:mesonbuild.buildFolder}",
-            "program": "${workspaceFolder}/${config:mesonbuild.buildFolder}/example",
+            "cwd": "${workspaceFolder}/01-debugging/builddir",
+            "program": "${workspaceFolder}/01-debugging/builddir/example",
             "stopAtEntry": false,
-            "preLaunchTask": "Meson: Build example:executable"
+            "preLaunchTask": "Compile: lab 1"
         }
     ]
 }
