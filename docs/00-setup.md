@@ -42,11 +42,43 @@ If your machine is using Apple Silicon (newer 2021+ Macs), download the
 <Tabs groupId="operating-systems">
   <TabItem value="win" label="Windows">
 
-Install **VirtualBox**.
+We're going to use [VirtualBox][virtualbox] to host our virtual machine.
+Follow the *Downloads* or click [here][virtualbox-download] then click the link
+for *Windows hosts*.
+This downloads the VirtualBox exe installer, open the exe, allow this app to
+make changes to your device, and it should open the setup window.
+Click *Next >*, accept all the defaults and click *Next >* again, click *Yes*,
+click *Yes* again, then click *Install*.
+You'll have to wait a bit as VirtualBox installs, afterwards leave the box
+checked and click "Finish".
+
+Now the go to the **VirtualBox** window and create your virtual machine by
+following these steps:
+1. Click *New* at the top of the window.
+2. Fill out the *Name:* field with "Debian Testing", or whatever you'd like
+   to name your virtual machine.
+3. Click on the arrow to the right of *ISO Image:*, click *Other ...*, and
+   select the Debian Testing ISO you downloaded. 
+   The ISO should have a filename similar to `debian-testing-amd64-netinst.iso`.
+   Click open and you should see the *ISO Image:* field filled in.
+4. Click the *Skip Unattended Installation* checkbox to select it.
+   You should see a message at the bottom that says *You have selected to skip
+   unattended guest OS install, the guest OS will need to be installed
+   manually.*.
+5. Leave the rest of the defaults on this window and click *Next*.
+6. Change the number of processors on this screen to at least "4", you can
+   either drag the slider to the right of *Processors:* or input the number.
+   Click the box next to *Enable EFI (special OSes only)* to check that option.
+   Leave the *Base Memory:* field default for now, and click *Next*.
+7. Leave the default *Create a Virtual Hard Disk Now* selected and increase
+   the disk to "40.00 GB".
+   You can leave *Pre-allocate Full Size* unselected and click *Next*.
+8. The next screen is *Summary*, double-check your previous settings and
+   click *Finish*.
+
 
   </TabItem>
   <TabItem value="mac" label="macOS">
-
 
 We're going to use [UTM][utm] to host our virtual machine.
 You do not need to pay for it, although if you want to support the developers
@@ -68,6 +100,8 @@ Launch **UTM** and create your virtual machine by following these steps:
 8. The next screen is *Summary*, if you want you can rename your virtual machine
    to "Debian Testing", or whatever you'd like. Click *Save*.
 
+When you use the virtual machine, if you find your mouse cursor stuck in the
+VM, press **Right Ctrl** to get it back.
 
   </TabItem>
   <TabItem value="linux" label="Linux">
@@ -89,7 +123,8 @@ USB flash drive.
 
 Start your virtual machine, after a few seconds it should boot up.
 After the machine boots, follow these steps:
-1. Select *Graphical install* by pressing down arrow, then enter.
+1. Select *Graphical install* by using the arrow keys (if it's not already
+   selected), then press enter.
 2. Select whichever language you'd like, then click *Continue*.
 3. Select *Canada* for your location, then click *Continue*.
 4. Unless you're used to different keymaps, select the default
@@ -158,16 +193,17 @@ After the machine boots, follow these steps:
 28. We're finally done installing the operating system! Click *Continue*.
 
 Now, the installer will reboot the virtual machine.
-You'll likely see the same screen as in step 1.
-We need to shut down the VM and remove the ISO we used to install the operating
-system.
+You'll either see the same screen as in step 1 or a login screen for your user.
+If you see the same screen as step 1, we need to shut down the VM and remove the
+ISO we used to install the operating system.
 
 ### Remove Debian Testing ISO
 
 <Tabs groupId="operating-systems">
   <TabItem value="win" label="Windows">
 
-Shut down VM.
+VirtualBox automatically removes the installation media, so there's nothing to
+do for this step.
 
   </TabItem>
   <TabItem value="mac" label="macOS">
@@ -280,7 +316,7 @@ sudo apt install build-essential clang clangd git meson python3
 ```
 
 Now we've installed the software that we'll be using in every lab.
-We've finished the setup for our virtual machine.
+We've finished the basic setup for our virtual machine.
 
 ## Part 2: Your Development Environment
 
@@ -606,6 +642,38 @@ Please close all other terminals, you'll only need the one within VSCode
 from now on.
 Everything you type in the terminal in VSCode will run on the virtual machine.
 
+Now, we'll setup our Git options.
+Type the following commands in this terminal window within VSCode:
+
+```
+git config --global user.name "Your Full Name"
+git config --global user.email your@email.com
+```
+
+Replace `"Your Full Name"` and `your@email.com` with your information that
+matches the GitLab server (your email should end with something similar to
+`@mail.utoronto.ca`).
+Next, we'll do some more Git settings, type the following commands:
+
+```
+git config --global init.defaultBranch main
+git config --global pull.rebase false
+git config --global alias.lol "log --pretty=oneline --abbrev-commit --graph --decorate"
+```
+
+These settings are few sanity options for Git and also gives you a nice command
+to see the history of your repository visually, `git lol` in the terminal.
+Try it now, this is useful to sanity check what's on the GitLab server and
+what's on your machine (if the list is long you'll have to press "q" to quit
+and regain control).
+The line with `HEAD -> main` on it should be your latest commit, if that commit
+is also available on the server you should see `origin/main` beside it.
+Otherwise, anything above `origin/main` is not on the server, and the course
+staff cannot see it (also your work is only on your machine so if something
+bad happens you lose all your work).
+To make sure all the latest changes are on the server use the `git push`
+command.
+
 Congratulations, that was quite a journey!
 You used virtualization to install your own Linux operating system from scratch.
 This is a rite of passage for any operating system course, and will serve you
@@ -635,6 +703,8 @@ int main() {
 [utm]: https://getutm.app/
 [utm-app-store]: https://apps.apple.com/us/app/utm-virtual-machines/id1538878817
 [utm-app]: https://github.com/utmapp/UTM/releases/latest/download/UTM.dmg
+[virtualbox]: https://www.virtualbox.org/
+[virtualbox-download]: https://www.virtualbox.org/wiki/Downloads
 [git]: https://git-scm.com/
 [git-for-windows]: https://git-scm.com/download/win
 [1password]: https://1password.com/
