@@ -193,7 +193,7 @@ You may now delete the `debian-testing-?????-netinst.iso` file you downloaded.
 ### Install Software
 
 Start your virtual machine and login using the user password you set earlier.
-After logging in press **Activities** in the top left and type "Terminal" then
+After logging in press **Activities** in the top left, type "Terminal" then
 press enter.
 This will open a terminal and give you access to a shell to run programs.
 Right now our user can't do anything special, but we're going to change that.
@@ -297,6 +297,233 @@ operating system and the virtual machine is a pain to set up.
 For the following instructions, just like for your operating system, there are
 tabs you can change depending on your choice.
 
+### Generate an SSH Key
+
+<Tabs groupId="development-environment">
+  <TabItem value="remote" label="Remote Development">
+
+First, we'll have to install an SSH client and Git on your local machine.
+
+<Tabs groupId="operating-systems">
+  <TabItem value="win" label="Windows">
+
+Install [Git for Windows][git] from [here][git-for-windows].
+After installing Git, launch **Git Bash**, you'll run the remaining commands
+from here.
+
+  </TabItem>
+  <TabItem value="mac" label="macOS">
+
+Open a terminal by pressing **Cmd+Space**, typing "Terminal", and pressing
+enter.
+You should be able to type in the command `git --version` then press enter,
+macOS will ask you if you'd like to install it if it's not already installed.
+You'll run the remaining commands from here.
+
+  </TabItem>
+  <TabItem value="linux" label="Linux">
+
+Ensure you have [Git][git] and an SSH client (likely OpenSSH).
+You'll likely have to consult your distribution documentation for the proper
+package names.
+Open a terminal, we'll run the remaining commands from here.
+
+  </TabItem>
+</Tabs>
+
+  </TabItem>
+  <TabItem value="vm" label="Virtual Machine Development">
+
+Open a terminal, if you've forgotten how press **Activities** in the top left,
+type "Terminal" then press enter.
+We already have all the tools we need, so that's all you have to do for this
+step.
+You'll run the remaining commands from here.
+
+  </TabItem>
+</Tabs>
+
+Next, we're going to generate an SSH key.
+Older guides may as you to generate an RSA key, but current best practices
+suggest upgrading to Ed25519.
+Generate your new key by typing the following command and pressing enter:
+
+```
+ssh-keygen -t ed25519
+```
+
+You can follow these steps:
+1. Press enter to save your private key to the default location.
+2. Enter a passphrase.
+   **Enter a good passphrase and remember it.**
+   This should be unique, and not shared with any other of your passwords.
+   It's important to set this because even if you accidentally share your
+   private key (which you should **NEVER** do), someone else would still need
+   your passphrase to use it and pretend to be you.
+   You should setup an SSH agent, so you don't have to constantly re-enter your
+   passphrase.
+   Also, you should use a password manager like [1Password][1password] (paid,
+   and Canadian) or [Bitwarden][bitwarden] (free for personal use).
+   If you'd like to ignore this warning, you can make it blank (as someone who
+   has done this, trust me, you'll regret it).
+3. Enter the same passphrase again to make sure you typed it correctly.
+
+That's it!
+You should get a message that your key was successfully created.
+There's going to be two files generated: `id_ed25519`, and `id_ed25519.pub`.
+`id_ed25519` is your private key, you should **NEVER** share this and be very
+careful if you try to move it.
+This key is your secure identity, you should be able to use this to access
+multiple systems if you keep it safe.
+`id_ed25519.pub` is your public key, you can share this, and in fact you should.
+This public key matches with your private key.
+You can share the public key, so other people know that data encrypted by your
+private key was from you.
+Type the following command and press enter:
+
+```
+cat ~/.ssh/id_ed25519.pub
+```
+
+Copy the result of this command, this is **your public key**.
+You'll need it to access your code for the course.
+
+### Setup GitLab
+
+Make sure you login to [GitLab][gitlab] and can access it.
+If you're using the virtual machine, you can use Firefox (press the Windows or
+Command key and click the leftmost icon on the dock) to access the website
+found at: https://laforge.eecg.utoronto.ca/.
+If it takes too long to get access, please just ping Jon on Discord, likely
+your information is not on Quercus yet.
+Follow these steps to add your public key on GitLab:
+1. Click your avatar near the top left (and over to the right a bit)
+2. Click Edit profile
+3. Click SSH Keys on the left
+4. Add your public SSH key 
+    1. Copy your public key (from running `cat ~/.ssh/id_ed25519.pub`).
+    2. Paste your public key into the "Key" text box on the site.
+    3. (Optional) Give the key a title (it’ll be its name).
+    4. Use the default "Usage type" and "Expiration date".
+    5. Press the "Add key" button.
+
+### Setup Remote Access
+
+<Tabs groupId="development-environment">
+  <TabItem value="remote" label="Remote Development">
+
+We're also going to need to add the SSH key to our virtual machine.
+Make sure your virtual machine is running, if it's not already.
+Login to the virtual machine, open a terminal (if using the graphical
+environment), and run the following command:
+
+```
+ip -br -4 addr
+```
+
+This will show you the IP address of your virtual machine, it's in the row
+beginning with `enp`.
+Your IP address is the number in the rightmost column, not including the slash
+and numbers after.
+It should be something like `192.168.64.3`, this is your VM's **IP**.
+Switch back to the terminal on *your computer* (that you used to generate the
+SSH key) and run the following command:
+
+```
+ssh-copy-id <USERNAME>@<IP>
+```
+
+Replace `<USERNAME>` with the username you set for your virtual machine, and
+`<IP>` with the VM's IP address.
+It should ask you for your user password you set on the virtual machine, enter
+your password, and press enter.
+You shouldn't have to use your user password for remote SSH access now, in
+general password logins are less secure (mostly since people tend to pick bad
+passwords).
+
+Now, we're going to copy our SSH key (public and private) to the virtual
+machine.
+We need to do this because our virtual machine will communicate with the GitLab
+server directly.
+You could create another SSH key on the virtual machine and add that one to
+GitLab instead (the one you already generated would just be used to connect to
+your virtual machine).
+However, we'll keep it simple and use the same key for both.
+Type the following commands on *your machine* (replace `<USERNAME>` and `IP`
+with the same information as before):
+
+```
+scp  ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub <USERNAME>@<IP>:~/.ssh/
+```
+
+Now, we're going to remote into the virtual machine and complete the next
+section on the virtual machine.
+Type the following command on your machine to remote into the virtual machine:
+
+```
+ssh <USERNAME>@<IP>
+```
+
+This should ask you for your passphrase, input it, and press enter.
+Now the commands you type run on the virtual machine even though you're typing
+them on your machine.
+We're doing this mainly because we can copy and paste easier for the next
+section (you could do the next section directly on the virtual machine if you'd
+like).
+For the next section type the commands here.
+
+  </TabItem>
+  <TabItem value="vm" label="Virtual Machine Development">
+  
+If you're developing on the virtual machine you don't need to do anything here.
+Keep using your current terminal for the next section.
+
+  </TabItem>
+</Tabs>
+
+### Clone Your Code Repository
+
+Now that you're authorized to use GitLab, you can use Git to clone your
+repository to your computer.
+We're going to continue using the same terminal we used in the previous
+sections.
+If you haven't used Git before, it not only stores your source code.
+Git stores the entire history of changes you make to your code, so as long as
+you make checkpoints (through committing and pushing), you can always go back
+to any previous version of your code.
+If you haven't heard the terms committing and pushing before, please read
+the [Git Book][git-book] (especially chapter 2).
+In short, a "commit" creates a checkpoint of all your source files *on your
+computer* (you can do this without internet).
+A "push" makes sure your repository with all your checkpoints is the same as
+the one on a server (you need internet to do this, and to ensure all your
+changes are on GitLab).
+
+Type the following commands, pressing enter after each line (replace
+`<USERNAME>` with your username on GitLab, which is your UTORid):
+
+```
+cd ~
+git clone git@laforge.eecg.utoronto.ca:ece344/2023-fall/<USERNAME>/ece344
+cd ece344
+git remote add upstream git@laforge.eecg.utoronto.ca:ece353/2023-fall/student/ece344
+```
+
+<Tabs groupId="development-environment">
+  <TabItem value="remote" label="Remote Development">
+
+Press **Ctrl+D** to logout of your virtual machine.
+You can now close your terminal on your machine.
+From this point on you shouldn't have to use the terminal on your local machine.
+
+  </TabItem>
+  <TabItem value="vm" label="Virtual Machine Development">
+  
+Keep the terminal open, you'll likely need it for the next section.
+
+  </TabItem>
+</Tabs>
+
 ### Install VSCode
 
 <Tabs groupId="development-environment">
@@ -313,6 +540,24 @@ First, find the IP of your virtual machine.
 
 Install the **Remote - SSH** extension.
 
+<Tabs groupId="operating-systems">
+  <TabItem value="win" label="Windows">
+
+Windows
+
+  </TabItem>
+  <TabItem value="mac" label="macOS">
+
+macOS
+
+  </TabItem>
+  <TabItem value="linux" label="Linux">
+
+Linux
+
+  </TabItem>
+</Tabs>
+
   </TabItem>
   <TabItem value="vm" label="Virtual Machine Development">
 
@@ -321,16 +566,7 @@ Install the **Remote - SSH** extension.
   </TabItem>
 </Tabs>
 
-
-https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supported-ssh-client
-
 Press F1 and run the **Remote-SSH: Open SSH Host...*** command
-
-### Generate an SSH Key
-
-```
-ssh-keygen -t ed25519
-```
 
 <Tabs groupId="development-environment">
   <TabItem value="remote" label="Remote Development">
@@ -346,15 +582,12 @@ First, find the IP of your virtual machine.
   </TabItem>
 </Tabs>
 
-### Setup GitLab
-
 ### Installing Software
 
 ```
 sudo dnf install clang
 ```
 
-https://laforge.eecg.utoronto.ca/
 
 ```c title="hello.c"
 #include <stdio.h>
@@ -376,4 +609,10 @@ sudo apt install linux-headers-$(uname -r)
 [utm]: https://getutm.app/
 [utm-app-store]: https://apps.apple.com/us/app/utm-virtual-machines/id1538878817
 [utm-app]: https://github.com/utmapp/UTM/releases/latest/download/UTM.dmg
+[git]: https://git-scm.com/
+[git-for-windows]: https://git-scm.com/download/win
+[1password]: https://1password.com/
+[bitwarden]: https://bitwarden.com/
+[gitlab]: https://laforge.eecg.utoronto.ca/
+[git-book]: https://git-scm.com/book/en/v2
 [vscode]: https://code.visualstudio.com/
