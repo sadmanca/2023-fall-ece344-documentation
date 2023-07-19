@@ -300,7 +300,7 @@ Now, we're going to install the software we need for the course.
 Type the following:
 
 ```
-sudo apt install build-essential clang clangd git meson python3
+sudo apt install build-essential clang clangd gdb git meson python3 strace valgrind
 ```
 
 Now we've installed the software that we'll be using in every lab.
