@@ -300,7 +300,7 @@ Now, we're going to install the software we need for the course.
 Type the following:
 
 ```
-sudo apt install build-essential clang clangd gdb git meson python3 strace valgrind
+sudo apt install build-essential clang clangd gdb git meson python3 strace valgrind zsh
 ```
 
 Now we've installed the software that we'll be using in every lab.
@@ -639,6 +639,8 @@ Compared to Intellisense, clangd uses a real C++ compiler with the flags used
 when you compile your code and is more accurate and better with larger
 codebases.
 
+### Additional Configuration
+
 You should open the terminal view in the bottom of VSCode by pressing
 **Ctrl+`**.
 Please close all other terminals, you'll only need the one within VSCode
@@ -687,6 +689,29 @@ Change the default compiler using the following command:
 ```
 sudo update-alternatives --set cc /usr/bin/clang
 ```
+
+Next, we'll change our shell to something a bit better than Bash.
+We're going to use Zsh, which is the default shell now on macOS.
+In addition, we're going to use [Oh My Zsh][oh-my-zsh] to make our shell
+a bit more usable.
+Install this custom Zsh configuration by running the following command:
+
+```
+sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+```
+
+If it asks for your `sudo` password, remember that it's your **user password**.
+This will change your shell over to the new one.
+You may now edit the configuration file for your shell using `nano -w ~/.zshrc`.
+I suggest changing the line that says `ZSH_THEME="robbyrussell"` to
+`ZSH_THEME="lukerandall"`.
+If you don't want to type your **SSH passphrase** all the time, also change
+the line that says `plugins=(git)` to `plugins=(git ssh-agent)`.
+Now, close your VSCode window and re-open it, pick *ece344* with the SSH again
+to re-connect.
+Now, in the VSCode terminal, type `ssh-add` and it'll ask you for your
+passphrase, enter it and you should see an `Identity added` message.
+Now you don't have to re-enter your passphrase again, convenient.
 
 Congratulations, that was quite a journey!
 You used virtualization to install your own Linux operating system from scratch.
@@ -744,3 +769,4 @@ MODULE_LICENSE("GPL");
 [gitlab]: https://laforge.eecg.utoronto.ca/
 [git-book]: https://git-scm.com/book/en/v2
 [vscode]: https://code.visualstudio.com/
+[oh-my-zsh]: https://ohmyz.sh/
