@@ -6,16 +6,16 @@ sidebar_position: 1
 
 ## Setting up debugging
 ### Install gdb:
-```
-sudo apt-get install gdb
-```
+
+***EDIT: gdb should already be installed now***
+
 Now you are good to go for debugging using command line. If you choose this traditional way to debug, checkout [gdb tutorial](https://web.eecs.umich.edu/~sugih/pointers/summary.html) as a starting point. [gdb manual](https://sourceware.org/gdb/current/onlinedocs/gdb.html/) provides every detail you need to know about gdb.
 
 ### Setup debugging with gui
 With gdb installed, you can use a modern editor or ide to debug visually. This section will use visual studio code as an example. In [lab 0](./00-setup.md), you should have vscode setup either on vm directly or through remote access.
 
 #### Setup debugging in project
-1. Install [C/C++ extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) and [Meson extension](https://marketplace.visualstudio.com/items?itemName=mesonbuild.mesonbuild) on vscode on vm or remotely.
+1. **EDIT: clangd is installed instead**
 2. VSCode, with [Meson extension](https://marketplace.visualstudio.com/items?itemName=mesonbuild.mesonbuild) installed, should recognize the meson project once you open it. If not, open up command palette and run **Meson: Reconfigure**.
 3. Create a launch target configuration in `.vscode/launch.json`. Bellow is an example for lab 1.
 ```
