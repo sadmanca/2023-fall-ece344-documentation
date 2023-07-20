@@ -724,16 +724,26 @@ operating system).
 
 ## Part 3: Your First Kernel Module
 
-```
-sudo apt install linux-headers-$(uname -r)
-```
+You're going to write (or at least use) your first kernel module.
+Kernel code is much different from user code (which is any code you can
+run as a program).
+For this lab you're going to explore some kernel code, and make a minor
+one line change to make sure you can submit labs using Git.
+
+### Development
+
+From your development environment, type the following command:
 
 ```
-sudo insmod hello.ko
-sudo modinfo hello.ko
-sudo dmesg -l info
-sudo rmmod hello
+cd hello-kernel
 ```
+
+We'll be using this directory for the lab, on the left sidebar you should
+also expand the *hello-kernel* directory to see 3 files: *.gitignore*,
+*hello.c*, and *Makefile*.
+Open *hello.c*, this is the code we're going to compile, you may notice
+there's some new things here.
+The content of this file should match the following:
 
 ```c title="hello.c"
 #include <linux/module.h>
@@ -755,6 +765,167 @@ MODULE_AUTHOR("Your name");
 MODULE_LICENSE("GPL");
 ```
 
+
+The kernel developers use [Make][make] to compile the kernel, so we have to use
+it to make our kernel module too (for future labs we'll use a more modern build
+system).
+Try running the following command:
+
+```
+make
+```
+
+You should get an error like
+`/lib/modules/6.3.0-1-arm64/build: No such file or directory`.
+We're missing the kernel's build files, and its header files.
+You likely have never seen an `#include` to a file starting with `linux/`, and
+your compiler can't find them either.
+Your virtual machine includes standard C header files (such as `stdio.h`), but
+most users do not write Linux kernel modules, so we'll have to install the
+header files.
+Run the following command to install the Linux header files:
+
+```
+sudo apt install linux-headers-$(uname -r)
+```
+
+Now try running the following command again:
+
+```
+make
+```
+
+This should complete successfully and create a bunch of new files.
+You'll notice that it didn't create an executable, so there's nothing we can
+run.
+We can't execute the kernel, since it's already running (we're currently using
+the operating system), we need to insert our code into the running kernel.
+To insert our module into the kernel, run the following command:
+
+```
+sudo insmod hello.ko
+```
+
+You'll notice nothing happens, but there's no error messages, what's going on?
+Did it work?
+Let's look at the code briefly, the `module_init()` "function" specifies
+what function to execute when the kernel loads the module.
+In our case it's `hello_init`.
+Our `hello_init` function calls `pr_info` which is also something new.
+`printf` does not exist in the kernel, because the standard C library doesn't
+exist in the kernel, it has to start from scratch.
+`pr_info` acts as `printf` for the kernel, but instead of printing to the
+terminal it logs the message internally.
+There's several other logging levels (such as errors, warnings, and debug),
+but we're using the info level, which is meant to represent non-critical
+information.
+To see all the kernel information messages type the following command:
+
+```
+sudo dmesg -l info
+```
+
+You should see `Hello kernel.` at the end of the last line (the number in the
+square brackets is the number of sentences since your kernel started).
+So, we verified that the kernel executed our code.
+To remove the module from the kernel (which runs the function specified
+by `module_exit`) run the following command:
+
+```
+sudo rmmod hello
+```
+
+Now, let's check that our code ran.
+Type the following command again:
+
+```
+sudo dmesg -l info
+```
+
+We should see `Goodbye kernel.` as the last line now.
+We can also use some kernel module utility programs, try running:
+
+```
+sudo modinfo hello.ko
+```
+
+You should be able to see that the string specified by `MODULE_AUTHOR` in the
+C file gets displayed here.
+Change the string from `"Your Name"` to your actual name.
+Make the change and save your *hello.c* file.
+Recompile your kernel module by typing `make` again.
+Run the following command again:
+
+```
+sudo modinfo hello.ko
+```
+
+You should see your name again.
+This is the only code change you're required to submit for this lab, there's
+some additional questions where you'll experiment with the code, but for now
+that's it (a one line change).
+
+### Submission
+
+We need to make a commit to save a checkpoint of all our work (even if it's
+one line).
+Type `git status` in the terminal to see all of your modifications.
+You should see `modified:   hello.c` in red.
+Red means when you type `git commit` (to save all your changes), this
+modification will not be included.
+Type `git add hello.c`, then type `git status` again.
+You should see the same line, but in green now.
+Since these are all our changes, and they're all included, we can make our
+commit now.
+Type `git commit -m "[Lab 0] Changed MODULE_AUTHOR to <Your name>."`, where you
+just like your change, replace `<Your name>` with your actual name.
+The string after `-m` is your commit message, it should be descriptive of your
+changes, so if you ever need to go back it's much easier to find your changes.
+Trust me, future you will thank you for writing good commit messages.
+You can also type just `git commit`, and it'll open a text editor where you can
+write more.
+Good commit messages start with a one line description, then have newlines
+separating paragraphs that explain why you needed to make the change.
+At any rate, after commit you should get a message confirming you saved all
+your changes.
+It should end with: `1 file changed, 1 insertion(+), 1 deletion(-)`.
+
+Now all our changes are saved on the virtual machine.
+We need to make them available on the GitLab server as well.
+First, we'll do another sanity check, type `git lol`.
+You should see your latest commit message at the very top, and `(HEAD -> main)`
+to the left of your message.
+`HEAD -> main` means your repository is on the `main` branch (you don't need
+to use multiple branches in this course).
+The line below should say `(origin/main, origin/HEAD)`, `origin` is just another
+name for the remote GitLab server and `origin/main` is the `main` branch
+on the server (we can ignore `origin/HEAD`).
+This means the `origin` server does not have the latest commit (changes),
+if you ran the `git clone` command again you wouldn't see your changes.
+You can also double-check the website that your changes aren't there.
+To make your `main` branch match the `main` branch on `origin` (the GitLab
+server) type `git push`.
+You should see it transfer and some information about what new commits the
+server has now.
+Type `git lol` again, and you should see `HEAD -> main` and `origin/main` on the
+same line.
+Triple-check the website, refresh and your changes should be there now.
+
+For future labs we'll only look at the time you push your changes to the GitLab
+server.
+We will never use your commit times (or file access times) as proof of
+submission, only when you push your code to the course Git server.
+You may push as many commits as you want (you should save your work often), your
+latest commit that modifies the lab files counts as your submission for the lab.
+
+To finish up, you'll answer some questions on Crowdmark (you should've recieved
+an email).
+This lab serves as a warm-up to get you familiar with real-world software
+development.
+Hopefully you learned something new, and it's okay if things didn't work the
+first time, that means you definitely learned something.
+The course staff and I will always be around to help, I hope you enjoy!
+
 [debian-installer]: https://www.debian.org/devel/debian-installer/
 [debian-amd64-iso]: https://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/amd64/iso-cd/debian-testing-amd64-netinst.iso
 [debian-arm64-iso]: https://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/arm64/iso-cd/debian-testing-arm64-netinst.iso
@@ -770,3 +941,4 @@ MODULE_LICENSE("GPL");
 [git-book]: https://git-scm.com/book/en/v2
 [vscode]: https://code.visualstudio.com/
 [oh-my-zsh]: https://ohmyz.sh/
+[make]: https://www.gnu.org/software/make/
