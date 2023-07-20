@@ -9,3 +9,5 @@ Have students use pipes.
 Have students use shared memory.
 
 Have students do a comparison.
+
+Have students become a subreaper for lab 2

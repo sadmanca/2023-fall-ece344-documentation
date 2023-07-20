@@ -789,6 +789,14 @@ Run the following command to install the Linux header files:
 sudo apt install linux-headers-$(uname -r)
 ```
 
+:::note
+
+You'll still see errors with includes in VSCode, it doesn't quite know how to
+handle kernel modules.
+Therefore, autocomplete doesn't quite work, don't worry, it will in future labs.
+
+:::
+
 Now try running the following command again:
 
 ```
