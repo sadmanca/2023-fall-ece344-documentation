@@ -739,8 +739,8 @@ cd hello-kernel
 ```
 
 We'll be using this directory for the lab, on the left sidebar you should
-also expand the *hello-kernel* directory to see 3 files: *.gitignore*,
-*hello.c*, and *Makefile*.
+also expand the *hello-kernel* directory to see 3 files: *.clangd*,
+*.gitignore*, *hello.c*, and *Makefile*.
 Open *hello.c*, this is the code we're going to compile, you may notice
 there's some new things here.
 The content of this file should match the following:
@@ -788,14 +788,6 @@ Run the following command to install the Linux header files:
 ```
 sudo apt install linux-headers-$(uname -r)
 ```
-
-:::note
-
-You'll still see errors with includes in VSCode, it doesn't quite know how to
-handle kernel modules.
-Therefore, autocomplete doesn't quite work, don't worry, it will in future labs.
-
-:::
 
 Now try running the following command again:
 
