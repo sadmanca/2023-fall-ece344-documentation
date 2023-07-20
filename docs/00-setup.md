@@ -7,11 +7,23 @@ import TabItem from '@theme/TabItem';
 
 # Lab 0: Setup
 
-After this starter lab you'll have a virtual machine, and have Git set up.
+In this starter lab, you'll build a Virtual Machine (VM), install an operating
+system, and set up your programming tools with VSCode and Git.
+Once your workspace is ready, you'll dive into the world of kernel programming
+by creating your first kernel module.
+This hands-on experience will give you a practical understanding of operating
+systems and get you ready for future coding tasks.
 
 ## Part 1: Creating Your Virtual Machine
 
-We're going to install an operating system from scratch.
+In this first part of the lab, we'll embark on a journey where we lay the
+groundwork for creating and configuring your very own virtual machine (VM).
+You will be installing an operating system from scratch, and you'll get 
+the opportunity to understand the internals and functions of an OS first-hand.
+This hands-on approach will help cement your understanding of operating system
+concepts, as you'll witness the installation and booting process, set up system
+configurations, and interact directly with the OS, all within the safe, isolated
+environment of a VM.
 
 ### Download Debian Testing ISO
 
@@ -300,7 +312,7 @@ Now, we're going to install the software we need for the course.
 Type the following:
 
 ```
-sudo apt install build-essential clang clangd gdb git meson python3 strace valgrind zsh
+sudo apt install bear build-essential clang clangd gdb git meson python3 strace valgrind zsh
 ```
 
 Now we've installed the software that we'll be using in every lab.
