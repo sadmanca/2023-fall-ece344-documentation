@@ -86,9 +86,9 @@ and get automatic updates you can get it on the [App Store][utm-app-store].
 If you'd like the free version, please download it [here][utm-app].
 
 Launch **UTM** and create your virtual machine by following these steps:
-1. Click *Create a New Virtual Machine*
-2. Click *Virtualize*
-3. Click *Linux*
+1. Click *Create a New Virtual Machine*.
+2. Click *Virtualize*.
+3. Click *Linux*.
 4. Under *Virtualization Engine*, leave *Use Apple Virtualization* unchecked.
    Under *Boot ISO Image*, click *Browse* and select the Debian Testing ISO
    you downloaded. The ISO should have a filename similar to
@@ -106,7 +106,24 @@ VM, press **Right Ctrl** to get it back.
   </TabItem>
   <TabItem value="linux" label="Linux">
 
-Install **virt-manager**.
+We're going to use [virt-manager][virt-manager] to host our virtual machines.
+These instructions are specific for a Debian based Linux distribution, so
+you may need to adjust for your package manager. 
+
+Install **virt-manager** using `sudo apt install virt-manager`.
+You should be able to launch `virt-manager` and follow these steps:
+1. Click *File* then *New Virtual Machine*.
+2. Select *Local install media (ISO image or CDROM)*.
+3. Click *Forward*.
+4. Under *Choose ISO or CDROM install media*, click *Browse* and select the
+   Debian Testing ISO you downloaded. The ISO should have a filename similar to
+   `debian-testing-?????-netinst.iso`. Finally, click *Forward*.
+5. You can use the defaults for Memory and CPU settings for now, click
+   *Forward*.
+6. You can leave the defaults for this section, but increase the disk image size
+   to 40.0 GiB, and click *Forward*.
+7. You can keep the default name, or use `debian-testing`, and click *Finish*.
+
 
   </TabItem>
 </Tabs>
@@ -219,7 +236,8 @@ virtual machine.
   </TabItem>
   <TabItem value="linux" label="Linux">
 
-Shut down VM.
+virt-manager should automatically remove the installation media, so there's
+nothing to do for this step.
 
   </TabItem>
 </Tabs>
@@ -930,7 +948,7 @@ submission, only when you push your code to the course Git server.
 You may push as many commits as you want (you should save your work often), your
 latest commit that modifies the lab files counts as your submission for the lab.
 
-To finish up, you'll answer some questions on Crowdmark (you should've recieved
+To finish up, you'll answer some questions on Crowdmark (you should've received
 an email).
 This lab serves as a warm-up to get you familiar with real-world software
 development.
@@ -945,6 +963,7 @@ The course staff and I will always be around to help, I hope you enjoy!
 [utm-app-store]: https://apps.apple.com/us/app/utm-virtual-machines/id1538878817
 [utm-app]: https://github.com/utmapp/UTM/releases/latest/download/UTM.dmg
 [hyper-v]: https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/
+[virt-manager]: https://virt-manager.org/
 [git]: https://git-scm.com/
 [git-for-windows]: https://git-scm.com/download/win
 [1password]: https://1password.com/
