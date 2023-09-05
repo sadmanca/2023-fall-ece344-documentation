@@ -14,6 +14,11 @@ by creating your first kernel module.
 This hands-on experience will give you a practical understanding of operating
 systems and get you ready for future coding tasks.
 
+There's two scripted YouTube videos I created that roughly correspond to Parts
+1 and 2 for Windows.
+- Part 1: https://youtu.be/opo53MSqETk
+- Part 2: https://youtu.be/COR3wE-hL2s 
+
 ## Part 1: Creating Your Virtual Machine
 
 In this first part of the lab, we'll embark on a journey where we lay the
