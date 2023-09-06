@@ -566,7 +566,7 @@ Type the following commands, pressing enter after each line (replace
 cd ~
 git clone git@laforge.eecg.utoronto.ca:ece344/2023-fall/<USERNAME>/ece344
 cd ece344
-git remote add upstream git@laforge.eecg.utoronto.ca:ece353/2023-fall/student/ece344
+git remote add upstream git@laforge.eecg.utoronto.ca:ece344/2023-fall/student/ece344
 ```
 
 <Tabs groupId="development-environment">
