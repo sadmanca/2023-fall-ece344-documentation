@@ -59,6 +59,18 @@ If your machine is using Apple Silicon (newer 2021+ Macs), download the
 <Tabs groupId="operating-systems">
   <TabItem value="win" label="Windows">
 
+:::note
+
+If you have Windows Home edition, you need to do an additional step before you
+start. Please go to this URL:
+https://www.itechtics.com/enable-hyper-v-windows-10-home/?expand_article=1 and
+follow the 3 steps under "Install Hyper-V in Windows 10 Home".
+
+You may be able to get Windows Education keys through the school at this URL:
+https://portal.azure.com/?Microsoft_Azure_Education_correlationId=512f7ee6-bbbb-45ab-873c-f4a8e4992360#view/Microsoft_Azure_Education/EducationMenuBlade/~/software.
+
+:::
+
 We're going to use **Hyper-V** to host our virtual machine.
 You can more about it [here][hyper-v], but it's built into Windows.
 Press the Windows key and type "Turn Windows features on or off" and hit enter.
@@ -127,7 +139,10 @@ You should be able to launch `virt-manager` and follow these steps:
    *Forward*.
 6. You can leave the defaults for this section, but increase the disk image size
    to 40.0 GiB, and click *Forward*.
-7. You can keep the default name, or use `debian-testing`, and click *Finish*.
+7. Keep the default name, or use `debian-testing`. Select *Customize
+   configuration before install*, and click *Finish*.
+8. In the overview configuration go down to *Firmware:* and select UEFI x86_64
+   then click *Begin Installation* in the top left.
 
 
   </TabItem>
@@ -578,7 +593,7 @@ From this point on you shouldn't have to use the terminal on your local machine.
 
   </TabItem>
   <TabItem value="vm" label="Virtual Machine Development">
-  
+
 Keep the terminal open, you'll likely need it for the next section.
 
   </TabItem>
