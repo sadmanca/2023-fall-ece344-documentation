@@ -54,6 +54,14 @@ If your machine is using Apple Silicon (newer 2021+ Macs), download the
 
 :::
 
+
+:::caution
+
+Do not try to open the `.iso` file! You just need to have it downloaded and
+accessible for the VM software.
+
+:::
+
 ### Setup Virtual Machine
 
 <Tabs groupId="operating-systems">
