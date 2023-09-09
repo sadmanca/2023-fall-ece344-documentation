@@ -14,6 +14,15 @@ by creating your first kernel module.
 This hands-on experience will give you a practical understanding of operating
 systems and get you ready for future coding tasks.
 
+:::caution
+
+If you follow the YouTube videos, be mindful that the videos are general and
+work without being in this specific course. Especially in Part 2, do not clone
+the GitHub repository, instead clone your GitLab repository with the
+instructions [here](setup#clone-your-code-repository).
+
+:::
+
 There's two scripted YouTube videos I created that roughly correspond to Parts
 1 and 2 for Windows.
 - Part 1: https://youtu.be/opo53MSqETk
