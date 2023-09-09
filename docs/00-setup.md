@@ -832,6 +832,14 @@ MODULE_AUTHOR("Your name");
 MODULE_LICENSE("GPL");
 ```
 
+:::note
+
+If you're using `x86_64` you may notice 9 errors, that's expected, so you can
+ignore them (it'll still compile). This is because the kernel relies on
+features only in `gcc`, and our tool uses `clang`. This will not be an
+issue in future labs.
+
+:::
 
 The kernel developers use [Make][make] to compile the kernel, so we have to use
 it to make our kernel module too (for future labs we'll use a more modern build
