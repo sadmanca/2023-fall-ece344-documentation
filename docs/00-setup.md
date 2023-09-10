@@ -1016,6 +1016,25 @@ Hopefully you learned something new, and it's okay if things didn't work the
 first time, that means you definitely learned something.
 The course staff and I will always be around to help, I hope you enjoy!
 
+## Common Issues
+
+### Terminal Text Behaves Unexpectedly
+
+Depending on the language settings you may notice your terminal spacing isn't
+quite right, or it gets corrupted. This is because there may be a mismatch
+in your language settings.
+If you choose a language other than US English you might have this issue.
+For example, I choose Canadian English try using the command:
+`export LANG=en_CA.UTF-8` if that works type:
+`echo 'export LANG=en_CA.UTF-8' > ~/.zshrc` to apply the fix permanently.
+
+### Hyper-V Runs Out of Memory
+
+You should try to limit the amount of memory you give the virtual machine.
+Launch *Hyper-V Manager*, right-click your VM, click *Settings*, go to *Memory*
+and reduce the RAM to *2048*. If that doesn't work pick *1024*. If your VM
+does not have a desktop environment, you'll require much less RAM.
+
 [debian-installer]: https://www.debian.org/devel/debian-installer/
 [debian-amd64-iso]: https://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/amd64/iso-cd/debian-testing-amd64-netinst.iso
 [debian-arm64-iso]: https://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/arm64/iso-cd/debian-testing-arm64-netinst.iso
