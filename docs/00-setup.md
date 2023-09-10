@@ -654,6 +654,13 @@ reconnect.
 
 :::
 
+:::info
+
+If you find you cannot connect to your virtual machine and everything else
+looks correct use `"remote.SSH.useLocalServer": false` in your VSCode settings.
+
+:::
+
 
 Click open on the splash screen or find it in the menu.
 You'll see another text field at the top center of this new VSCode window.
