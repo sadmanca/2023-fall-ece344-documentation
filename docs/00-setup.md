@@ -601,6 +601,14 @@ cd ece344
 git remote add upstream git@laforge.eecg.utoronto.ca:ece344/2023-fall/student/ece344
 ```
 
+:::caution
+
+If you get an error like: `WARNING: UNPROTECTED PRIVATE KEY FILE!` run the
+following command: `chmod 600 ~/.ssh/id_ed25519` and retry the clone command
+again.
+
+:::
+
 <Tabs groupId="development-environment">
   <TabItem value="remote" label="Remote Development">
 
