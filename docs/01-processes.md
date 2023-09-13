@@ -19,7 +19,7 @@ Make sure you have the latest skeleton code from us by running:
 `git pull upstream main`.
 
 This will create a merge, which you should be able to do cleanly.
-If you don't know how to do this read [pro-git][Pro Git].
+If you don't know how to do this read [Pro Git][pro-git].
 **Be sure to read chapter 3.1 and 3.2 fully.**
 This is how software developers coordinate and work together in large projects.
 For this course, you should always merge to maintain proper history between
