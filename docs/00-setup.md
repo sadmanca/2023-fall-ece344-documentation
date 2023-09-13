@@ -916,7 +916,7 @@ sudo dmesg -l info
 ```
 
 You should see `Hello kernel.` at the end of the last line (the number in the
-square brackets is the number of sentences since your kernel started).
+square brackets is the number of seconds since your kernel started).
 So, we verified that the kernel executed our code.
 To remove the module from the kernel (which runs the function specified
 by `module_exit`) run the following command:
