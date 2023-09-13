@@ -514,7 +514,7 @@ ip -br -4 addr
 ```
 
 This will show you the IP address of your virtual machine, it's in the row
-beginning with `enp`.
+beginning with `enp` (if you don't see this, it should be `eth0`).
 Your IP address is the number in the rightmost column, not including the slash
 and numbers after.
 It should be something like `192.168.64.3`, this is your VM's **IP**.
