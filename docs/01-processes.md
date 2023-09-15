@@ -72,7 +72,7 @@ After building, you can run your program with `build/tps` and compare
 your output to running `ps -eo pid:5,ucmd`.
 You may also choose to run the test suite provided with the command:
 
-    meson test -C build
+    meson test --print-errorlogs -C build
 
 If you fail a test, you should be able to read the log file given at the end
 of the output for a reason why the test failed.
@@ -119,5 +119,12 @@ the lab files counts as your submission.
 For submission time we will *only* look at the timestamp on our server.
 We will never use your commit times (or file access times) as proof of
 submission, only when you push your code to the course Git server.
+
+## Common Issues
+
+### Tests Randomly Fail when comparing `kworker` processes
+
+There's a workaround for this, please make sure you have the latest code
+by running `git pull upstream main`.
 
 [pro-git]: https://git-scm.com/book/en/v2/
