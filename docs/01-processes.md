@@ -54,6 +54,10 @@ For each process you should output the pid, right-justified with a width of
 
 You need to check for errors, and properly close all directories and file
 descriptors.
+You should only need two file descriptors open at any given time.
+If you fail to open a `status` file, that means the process no longer exists.
+You should handle this case by not printing any information about this
+now nonexistent process.
 
 ## Building
 
@@ -126,5 +130,12 @@ submission, only when you push your code to the course Git server.
 
 There's a workaround for this, please make sure you have the latest code
 by running `git pull upstream main`.
+
+### Tests Randomly Fail Otherwise
+
+In very rare cases, a process may exist only when the test executes `ps` and
+not exist when the test executes your code (or vice versa). Unfortunately you're
+running an entire operating system which is unpredictable. This is expected
+and okay. The test environment we use is predictable.
 
 [pro-git]: https://git-scm.com/book/en/v2/
