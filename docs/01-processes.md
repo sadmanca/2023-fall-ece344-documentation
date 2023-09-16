@@ -138,4 +138,6 @@ not exist when the test executes your code (or vice versa). Unfortunately you're
 running an entire operating system which is unpredictable. This is expected
 and okay. The test environment we use is predictable.
 
+Specifically this comes from: https://github.com/microsoft/vscode/blob/fa99dace5ee3b35a070ca4970422621af07c2781/src/vs/base/node/cpuUsage.sh#L37
+
 [pro-git]: https://git-scm.com/book/en/v2/
