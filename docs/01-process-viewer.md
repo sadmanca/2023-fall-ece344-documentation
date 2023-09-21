@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Lab 1: Processes
+# Lab 1: Process Viewer
 
 In this lab you'll create a small utility called *Toronto ProcesseS*
 (`tps`) that prints out the currently running processes on the machine.
