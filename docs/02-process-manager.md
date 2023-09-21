@@ -4,6 +4,7 @@ sidebar_position: 2
 
 # Lab 2: Process Manager
 
+**Due: October 4 @ 11:59 PM**
 
 In this lab you'll create a small library called *Subsubprocess*
 (`ssp`) that acts as a subreaper in addition to creating and
