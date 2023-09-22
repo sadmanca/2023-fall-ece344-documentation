@@ -113,6 +113,16 @@ You may be able to complete the lab without them, but this lab is short, and
 you'll be using these again for future labs.
 It's best to get some experience with them now for the shortest lab.
 
+### Use AddressSanitizer
+
+Re-create the build directory using:
+
+    rm -rf build
+    meson setup build -Db_sanitize=address
+    meson compile -C build
+
+Then run the test cases manually to see any memory errors.
+
 ## Submission
 
 Simply push your code using `git push origin main` (or simply
