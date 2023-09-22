@@ -202,16 +202,6 @@ It's highly recommended to at least use the following functions:
 
     open fdopendir readdir closedir dup2 waitpid fork execvp malloc perror exit
 
-### Use AddressSanitizer
-
-Re-create the build directory using:
-
-    rm -rf build
-    meson setup build -Db_sanitize=address
-    meson compile -C build
-
-Then run the test cases manually to see any memory errors.
-
 ## Submission
 
 Simply push your code using `git push origin main` (or simply
