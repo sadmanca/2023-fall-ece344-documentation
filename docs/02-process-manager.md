@@ -215,4 +215,18 @@ For submission time we will *only* look at the timestamp on our server.
 We will never use your commit times (or file access times) as proof of
 submission, only when you push your code to the course Git server.
 
+## Common Issues
+
+### Signals Causing System Calls to Fail
+
+We saw this in Lecture 6 in [signal-example.c](https://laforge.eecg.utoronto.ca/ece344/2023-fall/student/materials/-/blob/main/lectures/06-basic-ipc/signal-example.c?ref_type=heads), you may find it annoying or impossible to handle system calls
+failing with `EINTR` (like in [signal-example-2.c](https://laforge.eecg.utoronto.ca/ece344/2023-fall/student/materials/-/blob/main/lectures/06-basic-ipc/signal-example-2.c?ref_type=heads)). An alternative is to add some flags to your `struct sigaction`,
+as below:
+
+    new_action.sa_flags = SA_RESTART | SA_NOCLDSTOP;
+
+`SA_RESTART` will automatically restart system calls (so you won't see `EINTR`),
+and `SA_NOCLDSTOP` will force the kernel to only send your process `SIGCHLD`
+if the child terminates (and not any other event).
+
 [pro-git]: https://git-scm.com/book/en/v2/
