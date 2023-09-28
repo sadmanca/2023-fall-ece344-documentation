@@ -217,6 +217,34 @@ submission, only when you push your code to the course Git server.
 
 ## Common Issues
 
+### I Didn't Check for Errors for Every Function
+
+You absolutely should. You may waste hours and hours debugging something because
+you didn't detect an error and exit early. For this lab you may find it helpful
+to exit with a known exit status like `42`, so you know when a child process
+has that exit status it was because of a failure. Especially if you're modifying
+file descriptors this may be the **only easy way to debug**.
+
+This includes checking for errors from `opendir`, and `readdir`. `readdir` is
+especially annoying to check for errors, but you should still do it! If
+you read the documentation you'll find you should handle it similar to the
+following snippet:
+
+    while (1) {
+        errno = 0;
+        entry = readdir(dir);
+        if (entry == NULL) {
+            // At this point we don't know if we're done or if there's an error.
+            if (errno == 0) {
+                // No error, we're done! Stop this crazy loop.
+            }
+            else {
+                // There was an error! errno is set to indicate what it is.
+                // Panic! Exit! Do something!
+            }
+        }
+    }
+
 ### Signals Causing System Calls to Fail
 
 We saw this in Lecture 6 in [signal-example.c](https://laforge.eecg.utoronto.ca/ece344/2023-fall/student/materials/-/blob/main/lectures/06-basic-ipc/signal-example.c?ref_type=heads), you may find it annoying or impossible to handle system calls
