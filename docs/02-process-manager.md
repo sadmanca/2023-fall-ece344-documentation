@@ -257,4 +257,11 @@ as below:
 and `SA_NOCLDSTOP` will force the kernel to only send your process `SIGCHLD`
 if the child terminates (and not any other event).
 
+### Signals Missing Children
+
+Note that if a `SIGCHLD`` is sent while you are in the signal handler, a new
+signal will not be triggered. Your handler needs to make sure that there are no
+more terminated children
+before it exits.
+
 [pro-git]: https://git-scm.com/book/en/v2/
