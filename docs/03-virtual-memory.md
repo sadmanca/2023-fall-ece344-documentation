@@ -89,7 +89,6 @@ After, run the following commands:
 Whenever you make changes, you can run the compile command again.
 You should only need to run setup once.
 
-
 ## Testing
 
 You cannot execute your library directly, however you can run the test programs
