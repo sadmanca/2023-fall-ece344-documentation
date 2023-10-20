@@ -76,8 +76,6 @@ you'll find `reallocarray` helpful.
 
 You should return the `id` of the currently executing thread.
 
-
-
 ### `int wut_create(void (*run)(void))`
 
 You will create a new thread in this function, that new thread should be
@@ -100,6 +98,9 @@ If you ever need to use a stack size, use `SIGSTKSZ`.
 
 After initializing the thread control block, you should add it to a ready queue
 in FIFO order. You should not switch to this thread yet.
+
+You need to make sure that when the thread finishes running its `run` function
+it implicitly calls `wut_exit`. That way every thread will exit the same way.
 
 ### `int wut_yield(void)`
 
@@ -125,15 +126,17 @@ Some errors include: invalid thread to cancel, cannot cancel self.
 
 ### `int wut_join(int id)`
 
-This function should cause the calling thread to wait on the thread specified
-by `id` to finish (either by exiting to getting cancelled).
-The waited upon thread should also free any memory associated with its
-stack and `ucontext`.
+This function should cause the calling thread to block until the thread
+specified by `id` terminates (either by exiting to getting cancelled).
+Blocking means the current thread should stop running, and not be put into
+the ready queue (it cannot execute yet).
+Once the thread specified by `id` terminates, the calling thread should be
+re-added to the end of the ready queue.
+The calling thread should free any memory associated with the thread specified
+by `id` including its stack and `ucontext`.
 A thread may only be waited on by one other thread.
 You should detect and report an error if two threads attempt to join on the
 same thread (only the first thread that calls join should succeed).
-The calling thread should be removed from the ready queue, and only re-added
-after the other thread finishes.
 
 This function should return the status of the waited on thread to the caller.
 Also, the waited on thread should have its thread control block removed and its
