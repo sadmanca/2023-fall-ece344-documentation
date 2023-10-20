@@ -361,16 +361,19 @@ void check(void) {
 }
 ```
 
-
 ## Early Testing (5%)
+
+Again, this part is due **October 25 @ 11:59 PM**.
 
 The test cases assume you have a more-or-less complete working implementation.
 In order for you to test your code in development, and to suggest changes
-you may modify the code in `test/main.c` to call and test your library.
-When you build your code the executable will be `build/test/wut`.
+you may modify the code in `test/main.c` to test your library.
+When you build your code the executable created from `test/main.c` will be
+`build/test/wut`.
 
-You should not modify `check` and code should call `check`
-*one or more times*.
+You should not modify `check` and starting executing `main` should call `check`
+*one or more times* (`check` can be in a thread's run function), as long
+as the solution reaches it.
 The purpose of `check` is to check the value of an integer that you'd
 like to know from the solution.
 You'll be provided the output of the `check` calls shortly after the
@@ -383,6 +386,9 @@ These checks may be turned into test cases and used as part of the suite.
 You can look at the existing tests, but this `check` function is different
 from the `test` and `check` functions in the testing framework. Please do not
 create a `test` function, your execution starts from `main`.
+
+In order to receive 5% your test should produce output when the solution runs,
+and it should not copy any existing test case.
 
 ## Building
 
