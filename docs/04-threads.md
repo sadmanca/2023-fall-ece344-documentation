@@ -76,8 +76,6 @@ you'll find `reallocarray` helpful.
 
 You should return the `id` of the currently executing thread.
 
-
-
 ### `int wut_create(void (*run)(void))`
 
 You will create a new thread in this function, that new thread should be
@@ -100,6 +98,9 @@ If you ever need to use a stack size, use `SIGSTKSZ`.
 
 After initializing the thread control block, you should add it to a ready queue
 in FIFO order. You should not switch to this thread yet.
+
+You need to make sure that when the thread finishes running its `run` function
+it implicitly calls `wut_exit`. That way every thread will exit the same way.
 
 ### `int wut_yield(void)`
 
