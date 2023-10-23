@@ -92,7 +92,7 @@ You should allocate a stack for the new thread, set its user context using
 Each thread should have its own thread control block (`tcb`) that you design.
 We've provided you a `new_stack()` function that returns a pointer
 to a new stack of size `SIGSTKSZ`.
-You **must use** this function, mostly for you own sanity, it registers
+You **must use** this function, mostly for your own sanity, it registers
 the stack with `valgrind`, so you don't get a lot of false positives.
 If you ever need to use a stack size, use `SIGSTKSZ`.
 
