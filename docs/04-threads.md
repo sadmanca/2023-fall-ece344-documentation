@@ -92,7 +92,7 @@ You should allocate a stack for the new thread, set its user context using
 Each thread should have its own thread control block (`tcb`) that you design.
 We've provided you a `new_stack()` function that returns a pointer
 to a new stack of size `SIGSTKSZ`.
-You **must use** this function, mostly for you own sanity, it registers
+You **must use** this function, mostly for your own sanity, it registers
 the stack with `valgrind`, so you don't get a lot of false positives.
 If you ever need to use a stack size, use `SIGSTKSZ`.
 
@@ -171,7 +171,7 @@ Internally the status should only be values between `0` and `255`
 inclusive.
 You must only store the lower byte of the `status` argument.
 If you are unfamiliar with lower level operations in C, you can use:
-`status \&= 0xFF;` and afterwards `status` will be between `0` and `255`.
+`status &= 0xFF;` and afterwards `status` will be between `0` and `255`.
 (Note: this is what occurs when you `exit` from a process as well).
 This means that successful calls to `wut_join` will also return a
 value between `0` and `255`.
