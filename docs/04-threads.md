@@ -454,4 +454,18 @@ For submission time we will *only* look at the timestamp on our server.
 We will never use your commit times (or file access times) as proof of
 submission, only when you push your code to the course Git server.
 
+## Common Issues
+
+You do need to be careful about data races, we do have concurrency. Most of
+the very difficult to debug cases involve data races.
+
+### Segfault in `swapcontext`
+
+When you create your thread control block, you should not have `ucontext_t`
+as a field. You should have `ucontext_t *` instead. If you have `ucontext_t`
+the address you give to `swapcontext` may not be valid if you have to increase
+the size of your dynamically allocated TCB array (`reallocarray` may move
+the array). Therefore, you should `malloc` the `ucontext_t` separately so
+the address of the `ucontext_t` does not change, even if the array moves.
+
 [pro-git]: https://git-scm.com/book/en/v2/
