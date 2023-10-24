@@ -100,7 +100,7 @@ After initializing the thread control block, you should add it to a ready queue
 in FIFO order. You should not switch to this thread yet.
 
 You need to make sure that when the thread finishes running its `run` function
-it implicitly calls `wut_exit`. That way every thread will exit the same way.
+it implicitly calls `wut_exit` with a status of `0`. That way every thread will exit the same way.
 
 ### `int wut_yield(void)`
 
