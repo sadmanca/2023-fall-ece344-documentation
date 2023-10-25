@@ -302,7 +302,7 @@ void t2_run(void) {
     /* (9) Create a new thread, the lowest available thread id should be 0 since
            it got joined at (5). The current running thread is still 2, and the
            ready queue should be = [0]. */
-    int id4 = wut_create(null_run); // queue = {2, 0}
+    int id4 = wut_create(null_run);
     /* (10) Write the return value of `wut_create` to index 9 of shared memory,
             it should be 0. */
     shared_memory[9] = id4;
@@ -434,6 +434,7 @@ It's highly recommended to at least use the following functions:
     getcontext
     makecontext
     swapcontext
+    setcontext
     exit
 
 You may also find `sys/queue.h` helpful, especially the `TAILQ`
