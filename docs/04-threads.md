@@ -469,4 +469,14 @@ the size of your dynamically allocated TCB array (`reallocarray` may move
 the array). Therefore, you should `malloc` the `ucontext_t` separately so
 the address of the `ucontext_t` does not change, even if the array moves.
 
+### Valgrind Doesn't Work
+
+There's a problem with older version of Valgrind using Clang. Try:
+
+    rm -rf build
+    CC=gcc meson setup build
+    meson compile -C build
+
+After this you should be able to continue as normal and Valgrind should work.
+
 [pro-git]: https://git-scm.com/book/en/v2/
