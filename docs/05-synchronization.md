@@ -203,4 +203,23 @@ For submission time we will *only* look at the timestamp on our server.
 We will never use your commit times (or file access times) as proof of
 submission, only when you push your code to the course Git server.
 
+## Common Issues
+
+### My Performance Isn't What Expected
+
+You likely have a data race. You can look at the online tool, or run
+ThreadSanitizer yourself with the following commands:
+
+    meson setup -Db_sanitize=thread --wipe build
+    meson compile -C build
+  
+Then run the tester. If you want to disable ThreadSanitizer, use:
+
+    meson setup -Db_sanitize=none --wipe build
+    meson compile -C build
+
+Note, you should be able to explain WHY you have a data race, and what incorrect
+behaviour may happen. The sanity check given to you is **only one** of the
+possible unexpected outcomes that may happen.
+
 [pro-git]: https://git-scm.com/book/en/v2/
