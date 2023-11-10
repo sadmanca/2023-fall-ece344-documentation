@@ -72,7 +72,7 @@ Create a **single** mutex, only for `v1`, and make
 `hash_table_v1_add_entry` thread-safe by adding the proper locking
 calls.
 You should not create any global variables, and instead add any data you'd
-like to the `struct`s (`hash_table_entry` and/or `list_entry`).
+like to the `struct`s (`hash_table_vX`, `hash_table_entry` and/or `list_entry`).
 You need to initialize the mutex in `hash_table_v1_create` and destroy
 it in `hash_table_v1_destroy`.
 
