@@ -120,8 +120,8 @@ clean command):
     meson setup build
     meson compile -C build
     build/ext2-create # run the executable to create hello.img
-    dumpe2fs hello.img # dumps the filesystem information to help debug
-    fsck.ext2 hello.img # this will check that your filesystem is correct
+    sudo dumpe2fs hello.img # dumps the filesystem information to help debug
+    sudo fsck.ext2 hello.img # this will check that your filesystem is correct
     mkdir mnt # create a directory to mnt your filesystem to
     sudo mount -o loop hello.img mnt  # mount your filesystem, loop uses a file
     sudo umount mnt # unmount the filesystem when you're done
@@ -159,7 +159,7 @@ Part of programming is coming up with tests yourself.
 To run the provided test cases please run the following command in your lab
 directory:
 
-    python -m unittest
+    sudo python -m unittest
 
 ## Grading
 
@@ -185,7 +185,7 @@ submission, only when you push your code to the course Git server.
 
 ## Examples
 
-### Output of `dumpe2fs hello.img`
+### Output of `sudo dumpe2fs hello.img`
 
 Note that your output may be slightly different. You should understand these
 values and use macros that make sense, and not just hard code them.
@@ -233,7 +233,7 @@ However, you should get something like:
       Free blocks: 24-1023
       Free inodes: 14-128
 
-### Output of `fsck.ext2 hello.img`
+### Output of `sudo fsck.ext2 hello.img`
 
 You need to make sure you get the following output:
 
